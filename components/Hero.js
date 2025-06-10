@@ -1,70 +1,175 @@
-// components/Hero.js
+// components/Contact.js
 'use client';
 import React, { useState, useEffect } from 'react';
+import { Mail, Linkedin, Github, Send } from 'lucide-react';
 
-export default function Hero() {
-  const [typedText, setTypedText] = useState('');
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  
-  const words = ['Frontend Developer', 'React Specialist', 'Next.js Expert', 'UI/UX Enthusiast'];
-  const fullText = "Hi, I'm Prashant Chettiyar";
+export default function Contact() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', honey: '' });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  // Typing animation effect
   useEffect(() => {
-    let timeout;
-    const currentWord = words[currentWordIndex];
-    
-    if (typedText.length < currentWord.length) {
-      timeout = setTimeout(() => {
-        setTypedText(currentWord.slice(0, typedText.length + 1));
-      }, 100);
-    } else {
-      timeout = setTimeout(() => {
-        setTypedText('');
-        setCurrentWordIndex((prev) => (prev + 1) % words.length);
-      }, 2000);
+    const handleScroll = () => {
+      const element = document.getElementById('contact');
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        setIsVisible(rect.top < window.innerHeight && rect.bottom > 0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
+    setSuccess('');
+  };
+
+  const handleSubmit = () => {
+    const { name, email, message, honey } = formData;
+
+    if (honey) return; // honeypot protection
+    if (!name || !email || !message) {
+      setError('All fields are required.');
+      return;
     }
 
-    return () => clearTimeout(timeout);
-  }, [typedText, currentWordIndex, words]);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setSuccess(`Thanks ${name}! Your message has been sent.`);
+    setFormData({ name: '', email: '', message: '', honey: '' });
+  };
+
+  const socialLinks = [
+    {
+      name: 'Email',
+      icon: Mail,
+      url: 'mailto:prashant@example.com',
+      hoverColor: 'group-hover:text-red-600'
+    },
+    {
+      name: 'LinkedIn',
+      icon: Linkedin,
+      url: 'https://www.linkedin.com/in/prashant-chettiyar/',
+      hoverColor: 'group-hover:text-blue-600'
+    },
+    {
+      name: 'GitHub',
+      icon: Github,
+      url: 'https://github.com/prashant-chettiyar',
+      hoverColor: 'group-hover:text-gray-900'
+    }
+  ];
+
+  const handleSocialClick = (platform, url) => {
+    if (url.startsWith('mailto:')) {
+      window.location.href = url;
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center px-6 relative">
-      <div className="text-center max-w-4xl mx-auto">
-        <div className="animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-gray-900 leading-tight">
-            {fullText}
-          </h1>
-          <div className="h-16 flex items-center justify-center">
-            <p className="text-2xl md:text-3xl text-blue-600 font-semibold">
-              {typedText}
-              <span className="animate-pulse">|</span>
+    <section 
+      id="contact" 
+      className={`py-24 px-6 bg-gray-50 transition-all duration-1000 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-gray-900 text-center">
+          Let's Build Something Amazing
+        </h2>
+        
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-2xl font-semibold mb-8">Get In Touch</h3>
+            <p className="text-lg text-gray-600 mb-8">
+              Have a project in mind? Let's discuss how we can bring your ideas to life 
+              with modern web technologies.
             </p>
+            
+            <div className="flex space-x-6 mb-8">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <button
+                    key={social.name}
+                    onClick={() => handleSocialClick(social.name, social.url)}
+                    className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
+                  >
+                    <Icon className={`w-7 h-7 text-gray-700 transition-colors ${social.hoverColor}`} />
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          
-          <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto opacity-0 animate-fade-in" 
-             style={{animationDelay: '0.5s', animationFillMode: 'forwards'}}>
-            Creating beautiful, responsive web experiences with modern technologies
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in" 
-               style={{animationDelay: '1s', animationFillMode: 'forwards'}}>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 hover:scale-105 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl"
-            >
-              Let's Connect
-            </button>
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="px-8 py-4 border-2 border-gray-300 rounded-lg hover:border-blue-500 hover:text-blue-600 hover:scale-105 transition-all duration-300 font-semibold text-lg"
-            >
-              View Projects
-            </button>
+
+          {/* Contact Form */}
+          <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <h3 className="text-xl font-semibold mb-6">Send a Message</h3>
+            <div className="space-y-4">
+              <label htmlFor="name" className="sr-only">Your Name</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              />
+              <label htmlFor="email" className="sr-only">Your Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              />
+              <label htmlFor="message" className="sr-only">Your Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Your Message"
+                value={formData.message}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+              ></textarea>
+
+              {/* Honeypot Field */}
+              <input
+                type="text"
+                name="honey"
+                value={formData.honey}
+                onChange={handleInputChange}
+                className="hidden"
+              />
+
+              {/* Error or Success Message */}
+              {error && <p className="text-red-600 text-sm">{error}</p>}
+              {success && <p className="text-green-600 text-sm">{success}</p>}
+
+              <button
+                onClick={handleSubmit}
+                className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 hover:scale-105 transition-all duration-300 font-semibold flex items-center justify-center space-x-2"
+              >
+                <Send className="w-5 h-5" />
+                <span>Send Message</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
