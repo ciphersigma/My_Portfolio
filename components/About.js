@@ -1,4 +1,4 @@
-// components/About.js
+// components/About.js (Fixed)
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Download, ExternalLink } from 'lucide-react';
@@ -67,11 +67,11 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              I'm a passionate frontend developer who loves crafting digital experiences that make a difference. 
+              I&apos;m a passionate frontend developer who loves crafting digital experiences that make a difference. 
               With expertise in React and Next.js, I transform ideas into reality through clean, efficient code.
             </p>
             <p className="text-lg text-gray-500 mb-8">
-              When I'm not coding, you'll find me exploring new technologies, contributing to open source, 
+              When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to open source, 
               or sharing knowledge with the developer community.
             </p>
             

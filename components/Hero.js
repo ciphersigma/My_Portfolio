@@ -1,12 +1,19 @@
-// components/Hero.js
+// components/Hero.js (Fixed)
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 export default function Hero() {
   const [typedText, setTypedText] = useState('');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   
-  const words = ['Frontend Developer', 'React Specialist', 'Next.js Expert', 'UI/UX Enthusiast', "Cybersecurity Enthusiast"];
+  // Move words array to useMemo to fix dependency warning
+  const words = useMemo(() => [
+    'Frontend Developer', 
+    'React Specialist', 
+    'Next.js Expert', 
+    'UI/UX Enthusiast'
+  ], []);
+  
   const fullText = "Hi, I'm Prashant Chettiyar";
 
   // Typing animation effect
@@ -57,7 +64,7 @@ export default function Hero() {
               onClick={() => scrollToSection('contact')}
               className="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 hover:scale-105 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl"
             >
-              Let's Connect
+              Let&apos;s Connect
             </button>
             <button
               onClick={() => scrollToSection('projects')}

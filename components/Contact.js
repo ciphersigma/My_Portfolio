@@ -1,4 +1,4 @@
-// components/Contact.js
+// components/Contact.js (Fixed)
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github, Send } from 'lucide-react';
@@ -27,7 +27,7 @@ export default function Contact() {
 
   const handleSubmit = () => {
     if (formData.name && formData.email && formData.message) {
-      alert(`Thanks ${formData.name}! Your message has been sent. I'll get back to you soon!`);
+      alert(`Thanks ${formData.name}! Your message has been sent. I&apos;ll get back to you soon!`);
       setFormData({ name: '', email: '', message: '' });
     } else {
       alert('Please fill in all fields before sending your message.');
@@ -74,7 +74,7 @@ export default function Contact() {
     >
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold mb-16 text-gray-900 text-center">
-          Let's Build Something Amazing
+          Let&apos;s Build Something Amazing
         </h2>
         
         <div className="grid lg:grid-cols-2 gap-12">
@@ -82,7 +82,7 @@ export default function Contact() {
           <div>
             <h3 className="text-2xl font-semibold mb-8">Get In Touch</h3>
             <p className="text-lg text-gray-600 mb-8">
-              Have a project in mind? Let's discuss how we can bring your ideas to life 
+              Have a project in mind? Let&apos;s discuss how we can bring your ideas to life 
               with modern web technologies.
             </p>
             
