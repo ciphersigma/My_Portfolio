@@ -1,3 +1,4 @@
+// components/About.js
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Download, ExternalLink } from 'lucide-react';
@@ -29,6 +30,7 @@ export default function About() {
     { name: "Node.js", level: 75, icon: "🟢" }
   ];
 
+  // Method 1: Direct download
   const handleDownloadResume = () => {
     const link = document.createElement('a');
     link.href = '/assets/Prashant_Chettiyar_Resume.pdf';
@@ -37,9 +39,18 @@ export default function About() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    
+    // Track download (optional)
     setDownloadCount(prev => prev + 1);
+    
+    // Analytics tracking (if you have Google Analytics)
+    // gtag('event', 'download', {
+    //   'event_category': 'Resume',
+    //   'event_label': 'PDF Download'
+    // });
   };
 
+  // Method 2: Open in new tab for preview
   const handleViewResume = () => {
     window.open('/assets/Prashant_Chettiyar_Resume.pdf', '_blank');
   };
@@ -56,14 +67,15 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              I&apos;m a passionate frontend developer who loves crafting digital experiences that make a difference. 
+              I'm a passionate frontend developer who loves crafting digital experiences that make a difference. 
               With expertise in React and Next.js, I transform ideas into reality through clean, efficient code.
             </p>
             <p className="text-lg text-gray-500 mb-8">
-              When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to open source, 
+              When I'm not coding, you'll find me exploring new technologies, contributing to open source, 
               or sharing knowledge with the developer community.
             </p>
             
+            {/* Resume Download Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <button 
                 onClick={handleDownloadResume}
@@ -82,6 +94,7 @@ export default function About() {
               </button>
             </div>
 
+            {/* Optional: Download counter */}
             {downloadCount > 0 && (
               <p className="text-sm text-gray-500 mb-4">
                 Resume downloaded {downloadCount} time{downloadCount !== 1 ? 's' : ''}
@@ -95,7 +108,7 @@ export default function About() {
               <div
                 key={skill.name}
                 className="transform hover:scale-105 transition-all duration-300"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                style={{animationDelay: `${index * 0.1}s`}}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-3">
