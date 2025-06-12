@@ -1,4 +1,3 @@
-// app/layout.js - MUST BE EXACTLY THIS (no "use client" anywhere!)
 import './globals.css'
 
 export const metadata = {
@@ -6,7 +5,12 @@ export const metadata = {
   description: 'Portfolio of Prashant Chettiyar, Frontend Developer specializing in React & Next.js',
   keywords: 'frontend developer, react, nextjs, javascript, web development',
   author: 'Prashant Chettiyar',
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+// NEW: Separate viewport export (required in Next.js 15)
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({ children }) {
