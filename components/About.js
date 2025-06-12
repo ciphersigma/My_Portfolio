@@ -1,11 +1,12 @@
-// components/About.js - Simplified Skills (No Ratings)
+// components/About.js - Categorized Skills with Dropdown
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { Download, ExternalLink } from 'lucide-react';
+import { Download, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
   const [downloadCount, setDownloadCount] = useState(0);
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -25,19 +26,69 @@ export default function About() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isVisible]);
 
-  const skills = [
-    { name: "React", icon: "⚛️" },
-    { name: "Next.js", icon: "▲" },
-    { name: "JavaScript", icon: "🟨" },
-    { name: "TypeScript", icon: "🔷" },
-    { name: "Tailwind CSS", icon: "🎨" },
-    { name: "Node.js", icon: "🟢" },
-    { name: "HTML5", icon: "📄" },
-    { name: "CSS3", icon: "🎭" },
-    { name: "Git", icon: "📝" },
-    { name: "MongoDB", icon: "🍃" },
-    { name: "Express.js", icon: "⚡" },
-    { name: "Figma", icon: "🎯" }
+  const skillCategories = [
+    {
+      id: 'webdev',
+      name: 'Web Development',
+      icon: '💻',
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      borderColor: 'border-blue-200 dark:border-blue-700',
+      skills: [
+        { name: "React", icon: "⚛️" },
+        { name: "Next.js", icon: "▲" },
+        { name: "JavaScript", icon: "🟨" },
+        { name: "TypeScript", icon: "🔷" },
+        { name: "HTML5", icon: "📄" },
+        { name: "CSS3", icon: "🎭" },
+        { name: "Tailwind CSS", icon: "🎨" },
+        { name: "Node.js", icon: "🟢" },
+        { name: "Express.js", icon: "⚡" },
+        { name: "MongoDB", icon: "🍃" },
+        { name: "Git", icon: "📝" },
+        { name: "REST APIs", icon: "🔗" }
+      ]
+    },
+    {
+      id: 'cybersecurity',
+      name: 'Cybersecurity',
+      icon: '🔐',
+      color: 'from-red-500 to-pink-500',
+      bgColor: 'bg-red-50 dark:bg-red-900/20',
+      borderColor: 'border-red-200 dark:border-red-700',
+      skills: [
+        { name: "Network Security", icon: "🌐" },
+        { name: "Penetration Testing", icon: "🔍" },
+        { name: "Vulnerability Assessment", icon: "🛡️" },
+        { name: "Security Auditing", icon: "📊" },
+        { name: "Cryptography", icon: "🔒" },
+        { name: "Incident Response", icon: "🚨" },
+        { name: "Ethical Hacking", icon: "👨‍💻" },
+        { name: "OWASP", icon: "🔰" },
+        { name: "Firewall Management", icon: "🧱" },
+        { name: "Risk Assessment", icon: "⚖️" }
+      ]
+    },
+    {
+      id: 'aiml',
+      name: 'AI & Machine Learning',
+      icon: '🤖',
+      color: 'from-purple-500 to-indigo-500',
+      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+      borderColor: 'border-purple-200 dark:border-purple-700',
+      skills: [
+        { name: "Machine Learning", icon: "🧠" },
+        { name: "Deep Learning", icon: "🔬" },
+        { name: "Python", icon: "🐍" },
+        { name: "TensorFlow", icon: "🔥" },
+        { name: "PyTorch", icon: "⚡" },
+        { name: "Data Analysis", icon: "📈" },
+        { name: "NLP", icon: "📝" },
+        { name: "Computer Vision", icon: "👁️" },
+        { name: "Pandas", icon: "🐼" },
+        { name: "Scikit-learn", icon: "🔬" }
+      ]
+    }
   ];
 
   const handleDownloadResume = () => {
@@ -54,6 +105,10 @@ export default function About() {
 
   const handleViewResume = () => {
     window.open('/assets/Prashant_Chettiyar_Resume.pdf', '_blank');
+  };
+
+  const toggleCategory = (categoryId) => {
+    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
   };
 
   return (
@@ -103,30 +158,76 @@ export default function About() {
           </div>
           
           <div className="space-y-6">
-            <h3 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-white">Skills & Technologies</h3>
+            <h3 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-white">Skills & Expertise</h3>
             
-            {/* Skills Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {skills.map((skill, index) => (
+            {/* Skill Categories */}
+            <div className="space-y-4">
+              {skillCategories.map((category, index) => (
                 <div
-                  key={skill.name}
-                  className={`flex items-center space-x-3 p-4 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 border border-gray-200 dark:border-gray-600 ${
+                  key={category.id}
+                  className={`border rounded-xl overflow-hidden transition-all duration-300 ${category.borderColor} ${
                     isVisible ? 'animate-fade-in' : 'opacity-0'
                   }`}
-                  style={{animationDelay: `${index * 0.1}s`}}
+                  style={{animationDelay: `${index * 0.2}s`}}
                 >
-                  <span className="text-2xl">{skill.icon}</span>
-                  <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">
-                    {skill.name}
-                  </span>
+                  {/* Category Header */}
+                  <button
+                    onClick={() => toggleCategory(category.id)}
+                    className={`w-full p-6 ${category.bgColor} hover:opacity-90 transition-all duration-300 flex items-center justify-between group`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <span className="text-3xl">{category.icon}</span>
+                      <div className="text-left">
+                        <h4 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:scale-105 transition-transform duration-300">
+                          {category.name}
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Click to explore skills
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {category.skills.length} skills
+                      </span>
+                      {expandedCategory === category.id ? (
+                        <ChevronUp className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:scale-110 transition-transform duration-300" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:scale-110 transition-transform duration-300" />
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Expanded Skills */}
+                  {expandedCategory === category.id && (
+                    <div className="p-6 bg-white dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {category.skills.map((skill, skillIndex) => (
+                          <div
+                            key={skill.name}
+                            className="flex items-center space-x-2 p-3 bg-gray-50 dark:bg-gray-600 rounded-lg hover:scale-105 hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-500"
+                            style={{
+                              animationDelay: `${skillIndex * 0.05}s`,
+                              animation: 'fadeIn 0.4s ease-out forwards'
+                            }}
+                          >
+                            <span className="text-lg">{skill.icon}</span>
+                            <span className="font-medium text-gray-900 dark:text-white text-sm">
+                              {skill.name}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
 
-            {/* Optional: Add a note about continuous learning */}
+            {/* Learning Note */}
             <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-blue-800 dark:text-blue-200 text-sm">
-                <span className="font-semibold">Always Learning:</span> I continuously explore new technologies and best practices to stay current with the evolving web development landscape.
+                <span className="font-semibold">Always Learning:</span> I continuously explore new technologies and best practices across all domains to stay current with the evolving tech landscape.
               </p>
             </div>
           </div>
