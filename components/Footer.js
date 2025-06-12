@@ -1,4 +1,4 @@
-// components/Footer.js - Keep this if you have it
+// components/Footer.js - Fixed apostrophes for production build
 'use client';
 import React from 'react';
 import { ArrowUp, Heart, Github, Linkedin, Mail } from 'lucide-react';
@@ -16,16 +16,52 @@ export default function Footer() {
     }
   };
 
+  const socialLinks = [
+    {
+      name: 'GitHub',
+      icon: Github,
+      url: 'https://github.com/ciphersigma',
+      hoverColor: 'hover:text-gray-900 dark:hover:text-gray-100'
+    },
+    {
+      name: 'LinkedIn',
+      icon: Linkedin,
+      url: 'https://www.linkedin.com/in/prashantchettiyar/',
+      hoverColor: 'hover:text-blue-600 dark:hover:text-blue-400'
+    },
+    {
+      name: 'Email',
+      icon: Mail,
+      url: 'mailto:Prashantchettiyar@ieee.org',
+      hoverColor: 'hover:text-red-600 dark:hover:text-red-400'
+    }
+  ];
+
   return (
     <footer className="bg-gray-900 dark:bg-gray-950 text-white py-16 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold mb-4">Let's Stay Connected</h3>
+          <h3 className="text-3xl font-bold mb-4">Let&apos;s Stay Connected</h3>
           <p className="text-gray-300 dark:text-gray-400 max-w-2xl mx-auto">
-            Thank you for visiting my portfolio. I'm always excited to discuss new opportunities and innovative projects.
+            Thank you for visiting my portfolio. I&apos;m always excited to discuss new opportunities and innovative projects.
           </p>
         </div>
 
+        <div className="flex justify-center space-x-8 mb-12">
+          {socialLinks.map((social) => {
+            const IconComponent = social.icon;
+            return (
+              <button
+                key={social.name}
+                onClick={() => handleSocialClick(social.name, social.url)}
+                className={`w-12 h-12 bg-gray-800 dark:bg-gray-900 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-gray-700 dark:hover:bg-gray-800 ${social.hoverColor}`}
+                title={social.name}
+              >
+                <IconComponent className="w-5 h-5" />
+              </button>
+            );
+          })}
+        </div>
 
         <div className="border-t border-gray-800 dark:border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
