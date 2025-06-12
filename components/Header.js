@@ -1,7 +1,7 @@
-// components/Header.js - Fixed Text Contrast Based on Background
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Download, Sun, Moon } from 'lucide-react';
+import { analytics } from '../lib/analytics';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +17,6 @@ export default function Header() {
         document.documentElement.classList.add('dark');
       }
     } else {
-      // Check system preference
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setDarkMode(prefersDark);
       if (prefersDark) {
@@ -42,11 +41,17 @@ export default function Header() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    // Track theme toggle
+    analytics.themeToggle(newDarkMode ? 'dark' : 'light');
   };
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
+    
+    // Track navigation click
+    analytics.navClick(id);
   };
 
   const handleResumeDownload = () => {
@@ -54,6 +59,9 @@ export default function Header() {
     link.href = '/assets/Prashant_Chettiyar_Resume.pdf';
     link.download = 'Prashant_Chettiyar_Resume.pdf';
     link.click();
+    
+    // Track resume download
+    analytics.resumeDownload();
   };
 
   const navItems = [
@@ -63,42 +71,39 @@ export default function Header() {
     { name: 'Contact', id: 'contact' }
   ];
 
-  // Determine text colors based on background state
   const getTextClasses = () => {
     if (scrolled) {
-      // When scrolled, use contrasting colors based on actual background
       return darkMode 
-        ? 'text-gray-100' // Light text on dark background (dark mode scrolled)
-        : 'text-gray-900'; // Dark text on light background (light mode scrolled)
+        ? 'text-gray-100' 
+        : 'text-gray-900';
     } else {
-      // When transparent, ensure visibility on any background
       return darkMode 
-        ? 'text-white' // White text in dark mode
-        : 'text-gray-900'; // Dark text in light mode
+        ? 'text-white' 
+        : 'text-gray-900';
     }
   };
 
   const getNavTextClasses = () => {
     if (scrolled) {
       return darkMode 
-        ? 'text-gray-300 hover:text-blue-400' // Light nav text on dark background
-        : 'text-gray-700 hover:text-blue-600'; // Dark nav text on light background
+        ? 'text-gray-300 hover:text-blue-400' 
+        : 'text-gray-700 hover:text-blue-600';
     } else {
       return darkMode 
-        ? 'text-gray-100 hover:text-blue-400' // Light nav text in dark mode
-        : 'text-gray-800 hover:text-blue-600'; // Dark nav text in light mode
+        ? 'text-gray-100 hover:text-blue-400' 
+        : 'text-gray-800 hover:text-blue-600';
     }
   };
 
   const getMobileTextClasses = () => {
     if (scrolled) {
       return darkMode 
-        ? 'text-gray-300' // Light text on dark background
-        : 'text-gray-700'; // Dark text on light background
+        ? 'text-gray-300' 
+        : 'text-gray-700';
     } else {
       return darkMode 
-        ? 'text-gray-100' // Light text in dark mode
-        : 'text-gray-800'; // Dark text in light mode
+        ? 'text-gray-100' 
+        : 'text-gray-800';
     }
   };
 
@@ -175,7 +180,6 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
-            {/* Mobile Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
               className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${
