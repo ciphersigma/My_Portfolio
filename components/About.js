@@ -1,4 +1,4 @@
-// components/About.js - Categorized Skills with Dropdown
+// components/About.js - Fixed Color Schemes for Dark Mode
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { Download, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
@@ -32,8 +32,10 @@ export default function About() {
       name: 'Web Development',
       icon: '💻',
       color: 'from-blue-500 to-cyan-500',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
-      borderColor: 'border-blue-200 dark:border-blue-700',
+      bgColor: 'bg-blue-100 dark:bg-blue-800',
+      borderColor: 'border-blue-300 dark:border-blue-600',
+      textColor: 'text-blue-900 dark:text-blue-100',
+      subTextColor: 'text-blue-700 dark:text-blue-200',
       skills: [
         { name: "React", icon: "⚛️" },
         { name: "Next.js", icon: "▲" },
@@ -54,8 +56,10 @@ export default function About() {
       name: 'Cybersecurity',
       icon: '🔐',
       color: 'from-red-500 to-pink-500',
-      bgColor: 'bg-red-50 dark:bg-red-900/20',
-      borderColor: 'border-red-200 dark:border-red-700',
+      bgColor: 'bg-red-100 dark:bg-red-800',
+      borderColor: 'border-red-300 dark:border-red-600',
+      textColor: 'text-red-900 dark:text-red-100',
+      subTextColor: 'text-red-700 dark:text-red-200',
       skills: [
         { name: "Network Security", icon: "🌐" },
         { name: "Penetration Testing", icon: "🔍" },
@@ -74,8 +78,10 @@ export default function About() {
       name: 'AI & Machine Learning',
       icon: '🤖',
       color: 'from-purple-500 to-indigo-500',
-      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
-      borderColor: 'border-purple-200 dark:border-purple-700',
+      bgColor: 'bg-purple-100 dark:bg-purple-800',
+      borderColor: 'border-purple-300 dark:border-purple-600',
+      textColor: 'text-purple-900 dark:text-purple-100',
+      subTextColor: 'text-purple-700 dark:text-purple-200',
       skills: [
         { name: "Machine Learning", icon: "🧠" },
         { name: "Deep Learning", icon: "🔬" },
@@ -178,22 +184,22 @@ export default function About() {
                     <div className="flex items-center space-x-4">
                       <span className="text-3xl">{category.icon}</span>
                       <div className="text-left">
-                        <h4 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:scale-105 transition-transform duration-300">
+                        <h4 className={`text-xl font-semibold ${category.textColor} group-hover:scale-105 transition-transform duration-300`}>
                           {category.name}
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className={`text-sm ${category.subTextColor}`}>
                           Click to explore skills
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      <span className={`text-sm font-medium ${category.subTextColor}`}>
                         {category.skills.length} skills
                       </span>
                       {expandedCategory === category.id ? (
-                        <ChevronUp className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:scale-110 transition-transform duration-300" />
+                        <ChevronUp className={`w-5 h-5 ${category.subTextColor} group-hover:scale-110 transition-transform duration-300`} />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:scale-110 transition-transform duration-300" />
+                        <ChevronDown className={`w-5 h-5 ${category.subTextColor} group-hover:scale-110 transition-transform duration-300`} />
                       )}
                     </div>
                   </button>
@@ -225,8 +231,8 @@ export default function About() {
             </div>
 
             {/* Learning Note */}
-            <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-              <p className="text-blue-800 dark:text-blue-200 text-sm">
+            <div className="mt-8 p-4 bg-blue-100 dark:bg-blue-800 rounded-lg border border-blue-300 dark:border-blue-600">
+              <p className="text-blue-900 dark:text-blue-100 text-sm">
                 <span className="font-semibold">Always Learning:</span> I continuously explore new technologies and best practices across all domains to stay current with the evolving tech landscape.
               </p>
             </div>
