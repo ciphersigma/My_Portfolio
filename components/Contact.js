@@ -1,4 +1,4 @@
-// components/Contact.js (Direct Email - No Client Opening)
+// components/Contact.js - With Dark Mode
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, MapPin } from 'lucide-react';
@@ -48,8 +48,8 @@ export default function Contact() {
     setSubmitStatus(null);
 
     try {
-      // Send email directly via Formspree (no email client opens)
-      const response = await fetch('https://formspree.io/f/mdkzgajj', {
+      // Replace with your Formspree endpoint
+      const response = await fetch('https://formspree.io/f/xnnqoqbz', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,56 +97,53 @@ export default function Contact() {
       name: 'Email',
       icon: Mail,
       url: `mailto:${contactInfo.email}`,
-      hoverColor: 'group-hover:text-red-600'
+      hoverColor: 'group-hover:text-red-600 dark:group-hover:text-red-400'
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
       url: contactInfo.linkedin,
-      hoverColor: 'group-hover:text-blue-600'
+      hoverColor: 'group-hover:text-blue-600 dark:group-hover:text-blue-400'
     },
     {
       name: 'GitHub',
       icon: Github,
       url: contactInfo.github,
-      hoverColor: 'group-hover:text-gray-900'
+      hoverColor: 'group-hover:text-gray-900 dark:group-hover:text-gray-100'
     }
   ];
 
   return (
     <section 
       id="contact" 
-      className={`py-24 px-6 bg-gray-50 transition-all duration-1000 ${
+      className={`py-24 px-6 bg-gray-50 dark:bg-gray-800 transition-all duration-1000 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
     >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-gray-900 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-gray-900 dark:text-white text-center">
           Let&apos;s Build Something Amazing
         </h2>
         
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
           <div>
-            <h3 className="text-2xl font-semibold mb-8">Get In Touch</h3>
-            <p className="text-lg text-gray-600 mb-8">
+            <h3 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-white">Get In Touch</h3>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
               Have a project in mind? Let&apos;s discuss how we can bring your ideas to life 
               with modern web technologies.
             </p>
             
-            {/* Contact Details */}
             <div className="space-y-4 mb-8">
-              <div className="flex items-center space-x-3 text-gray-600">
-                <Mail className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 <span>{contactInfo.email}</span>
               </div>
-              <div className="flex items-center space-x-3 text-gray-600">
-                <MapPin className="w-5 h-5 text-red-600" />
+              <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                <MapPin className="w-5 h-5 text-red-600 dark:text-red-400" />
                 <span>{contactInfo.location}</span>
               </div>
             </div>
             
-            {/* Social Media Links */}
             <div className="flex space-x-4 mb-8">
               {socialLinks.map((social, index) => {
                 const IconComponent = social.icon;
@@ -154,44 +151,41 @@ export default function Contact() {
                   <button
                     key={social.name}
                     onClick={() => handleSocialClick(social.name, social.url)}
-                    className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
+                    className="w-16 h-16 bg-white dark:bg-gray-700 rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group border border-gray-200 dark:border-gray-600"
                   >
-                    <IconComponent className={`w-7 h-7 text-gray-700 transition-colors ${social.hoverColor}`} />
+                    <IconComponent className={`w-7 h-7 text-gray-700 dark:text-gray-300 transition-colors ${social.hoverColor}`} />
                   </button>
                 );
               })}
             </div>
 
-            {/* Why Choose Me */}
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Quick Response Guaranteed</h4>
-              <p className="text-blue-700 text-sm">
+            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Quick Response Guaranteed</h4>
+              <p className="text-blue-700 dark:text-blue-300 text-sm">
                 I typically respond to all inquiries within 24 hours. Let&apos;s discuss your project!
               </p>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="text-xl font-semibold mb-6">Send a Message</h3>
+          <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-600">
+            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Send a Message</h3>
             
-            {/* Success/Error Messages */}
             {submitStatus === 'success' && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
-                <CheckCircle className="w-5 h-5 text-green-600" />
+              <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                 <div>
-                  <p className="text-green-800 font-semibold">Message sent successfully!</p>
-                  <p className="text-green-700 text-sm">Thank you for reaching out. I&apos;ll get back to you within 24 hours!</p>
+                  <p className="text-green-800 dark:text-green-200 font-semibold">Message sent successfully!</p>
+                  <p className="text-green-700 dark:text-green-300 text-sm">Thank you for reaching out. I&apos;ll get back to you within 24 hours!</p>
                 </div>
               </div>
             )}
             
             {submitStatus === 'error' && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
-                <AlertCircle className="w-5 h-5 text-red-600" />
+              <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
                 <div>
-                  <p className="text-red-800 font-semibold">Failed to send message</p>
-                  <p className="text-red-700 text-sm">Please try again or contact me directly at {contactInfo.email}</p>
+                  <p className="text-red-800 dark:text-red-200 font-semibold">Failed to send message</p>
+                  <p className="text-red-700 dark:text-red-300 text-sm">Please try again or contact me directly at {contactInfo.email}</p>
                 </div>
               </div>
             )}
@@ -204,7 +198,7 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all duration-300 disabled:bg-gray-100 dark:disabled:bg-gray-600 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
               
               <input
@@ -214,7 +208,7 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all duration-300 disabled:bg-gray-100 dark:disabled:bg-gray-600 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
               
               <textarea
@@ -224,7 +218,7 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none disabled:bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all duration-300 resize-none disabled:bg-gray-100 dark:disabled:bg-gray-600 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               ></textarea>
               
               <button
@@ -232,8 +226,8 @@ export default function Contact() {
                 disabled={isSubmitting}
                 className={`w-full px-6 py-4 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-all duration-300 ${
                   isSubmitting 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-blue-500 hover:bg-blue-600 hover:scale-105 shadow-lg hover:shadow-xl'
+                    ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed' 
+                    : 'bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 hover:scale-105 shadow-lg hover:shadow-xl'
                 } text-white`}
               >
                 {isSubmitting ? (
@@ -249,7 +243,7 @@ export default function Contact() {
                 )}
               </button>
 
-              <p className="text-xs text-gray-500 text-center">
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
                 * Required fields. Your message will be sent directly to my inbox.
               </p>
             </div>

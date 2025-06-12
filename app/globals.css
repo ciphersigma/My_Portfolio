@@ -1,9 +1,5 @@
-/* styles/globals.css */
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* app/globals.css - Fixed Text Contrast for Info Boxes */
 @import "tailwindcss";
-
 
 /* Global Styles */
 html {
@@ -16,6 +12,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
 /* Custom Animations */
@@ -50,13 +54,25 @@ body {
   background: #f1f1f1;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #cbd5e0;
   border-radius: 4px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: #a0aec0;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }
 
 /* Focus styles for accessibility */
@@ -65,6 +81,12 @@ input:focus,
 textarea:focus {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
+}
+
+.dark button:focus,
+.dark input:focus,
+.dark textarea:focus {
+  outline-color: #60a5fa;
 }
 
 /* Prevent horizontal overflow */
@@ -105,4 +127,296 @@ a {
     font-size: 2rem;
     line-height: 1.3;
   }
+}
+
+/* Dark mode specific styles */
+.dark {
+  color-scheme: dark;
+}
+
+/* Selection colors */
+::selection {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.dark ::selection {
+  background-color: #60a5fa;
+  color: #1f2937;
+}
+
+/* Image filters for dark mode */
+.dark img:not([data-theme-ignore]) {
+  filter: brightness(0.9);
+}
+
+/* FIXED: Info Box Text Contrast */
+/* Blue info boxes (Learning note, Quick Response, etc.) */
+.dark .bg-blue-50 {
+  background-color: #1e3a8a !important; /* Dark blue background */
+}
+
+.dark .text-blue-800 {
+  color: #dbeafe !important; /* Light blue text for contrast */
+}
+
+.dark .text-blue-700 {
+  color: #bfdbfe !important; /* Slightly lighter blue */
+}
+
+.dark .border-blue-200 {
+  border-color: #3b82f6 !important; /* Visible blue border */
+}
+
+.dark .border-blue-800 {
+  border-color: #60a5fa !important; /* Light blue border */
+}
+
+/* Green info boxes */
+.dark .bg-green-50 {
+  background-color: #065f46 !important; /* Dark green background */
+}
+
+.dark .text-green-800 {
+  color: #d1fae5 !important; /* Light green text */
+}
+
+.dark .text-green-700 {
+  color: #a7f3d0 !important; /* Light green text */
+}
+
+.dark .border-green-200 {
+  border-color: #10b981 !important; /* Visible green border */
+}
+
+/* Yellow/Amber info boxes */
+.dark .bg-yellow-50 {
+  background-color: #78350f !important; /* Dark amber background */
+}
+
+.dark .text-yellow-800 {
+  color: #fef3c7 !important; /* Light yellow text */
+}
+
+.dark .text-yellow-700 {
+  color: #fde68a !important; /* Light yellow text */
+}
+
+.dark .border-yellow-200 {
+  border-color: #f59e0b !important; /* Visible yellow border */
+}
+
+/* Gray info boxes */
+.dark .bg-gray-50 {
+  background-color: #111827 !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #374151 !important;
+}
+
+.dark .text-gray-800 {
+  color: #f3f4f6 !important;
+}
+
+.dark .text-gray-700 {
+  color: #e5e7eb !important;
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+.dark .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+/* FIXED: Form Input Colors for Dark Mode */
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #d1d5db !important;
+  opacity: 1 !important;
+}
+
+input,
+textarea {
+  color: #111827;
+}
+
+.dark input,
+.dark textarea {
+  color: #f9fafb !important;
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark textarea:focus {
+  background-color: #374151 !important;
+  border-color: #60a5fa !important;
+  color: #ffffff !important;
+}
+
+/* FIXED: Proper Dark Mode Text Colors */
+.dark .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+.dark h1 {
+  color: #f9fafb !important;
+}
+
+.dark h2 {
+  color: #f9fafb !important;
+}
+
+.dark h3 {
+  color: #f9fafb !important;
+}
+
+.dark h4 {
+  color: #f9fafb !important;
+}
+
+.dark .text-white {
+  color: #ffffff !important;
+}
+
+/* FIXED: Status Badge Colors for Dark Mode */
+.dark .bg-green-100 {
+  background-color: #065f46 !important;
+}
+
+.dark .text-green-800 {
+  color: #a7f3d0 !important;
+}
+
+.dark .bg-yellow-100 {
+  background-color: #78350f !important;
+}
+
+.dark .text-yellow-800 {
+  color: #fde68a !important;
+}
+
+.dark .bg-blue-100 {
+  background-color: #1e3a8a !important;
+}
+
+.dark .text-blue-800 {
+  color: #bfdbfe !important;
+}
+
+.dark .bg-red-100 {
+  background-color: #7f1d1d !important;
+}
+
+.dark .text-red-800 {
+  color: #fecaca !important;
+}
+
+.dark .bg-purple-100 {
+  background-color: #581c87 !important;
+}
+
+.dark .text-purple-800 {
+  color: #e9d5ff !important;
+}
+
+/* Background fixes for dark mode */
+.dark .bg-white {
+  background-color: #1f2937 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .border-gray-300 {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark .border-gray-600 {
+  border-color: #4b5563 !important;
+}
+
+/* Proper Dark Mode Shadows */
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Loading animation for theme toggle */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Gradient text support for dark mode */
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+/* Better backdrop blur for dark mode */
+.dark .backdrop-blur-lg {
+  backdrop-filter: blur(16px) brightness(0.9);
+}
+
+/* Subtle glow effect for dark mode elements */
+.dark .hover\:shadow-xl:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.2),
+              0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Additional text color overrides for better visibility */
+.dark p {
+  color: #e5e7eb;
+}
+
+.dark span {
+  color: inherit;
+}
+
+.dark div {
+  color: inherit;
 }
