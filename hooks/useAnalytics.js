@@ -1,4 +1,4 @@
-// hooks/useAnalytics.js - React Hooks for Analytics
+// hooks/useAnalytics.js - React Hooks for Analytics ONLY
 import { useEffect, useRef } from 'react';
 import { analytics } from '../lib/analytics';
 
