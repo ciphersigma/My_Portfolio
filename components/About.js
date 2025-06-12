@@ -1,13 +1,18 @@
-// components/About.js - Fixed Color Schemes for Dark Mode
+// components/About.js - With Analytics Tracking
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { Download, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { analytics } from '../lib/analytics';
+import { useSectionView } from '../hooks/useAnalytics';
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
   const [downloadCount, setDownloadCount] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState(null);
   const sectionRef = useRef(null);
+
+  // Track when About section is viewed
+  useSectionView('about');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,14 +112,26 @@ export default function About() {
     document.body.removeChild(link);
     
     setDownloadCount(prev => prev + 1);
+    
+    // Track resume download
+    analytics.resumeDownload();
   };
 
   const handleViewResume = () => {
     window.open('/assets/Prashant_Chettiyar_Resume.pdf', '_blank');
+    
+    // Track resume view
+    analytics.resumeView();
   };
 
   const toggleCategory = (categoryId) => {
-    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
+    const wasExpanded = expandedCategory === categoryId;
+    setExpandedCategory(wasExpanded ? null : categoryId);
+    
+    // Track skill category expansion (only when expanding, not collapsing)
+    if (!wasExpanded) {
+      analytics.skillCategoryExpand(categoryId);
+    }
   };
 
   return (

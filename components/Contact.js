@@ -1,13 +1,19 @@
-// components/Contact.js - With Dark Mode
+// components/Contact.js - With Analytics Tracking
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, MapPin } from 'lucide-react';
+import { analytics } from '../lib/analytics';
+import { useSectionView } from '../hooks/useAnalytics';
 
 export default function Contact() {
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [hasStartedForm, setHasStartedForm] = useState(false);
+
+  // Track when Contact section is viewed
+  useSectionView('contact');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +32,12 @@ export default function Contact() {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (submitStatus) setSubmitStatus(null);
+    
+    // Track when user starts interacting with form (only once)
+    if (!hasStartedForm && e.target.value.length > 0) {
+      setHasStartedForm(true);
+      analytics.contactFormStart();
+    }
   };
 
   const isValidEmail = (email) => {
@@ -47,6 +59,9 @@ export default function Contact() {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
+    // Track form submission attempt
+    analytics.contactFormSubmit();
+
     try {
       // Replace with your Formspree endpoint
       const response = await fetch('https://formspree.io/f/xnnqoqbz', {
@@ -66,18 +81,31 @@ export default function Contact() {
       if (response.ok) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        setHasStartedForm(false);
+        
+        // Track successful form submission
+        analytics.trackEvent('contact_form_success', 'contact', 'form_submitted_successfully');
       } else {
         setSubmitStatus('error');
+        
+        // Track form submission error
+        analytics.trackEvent('contact_form_error', 'contact', 'form_submission_failed');
       }
     } catch (error) {
       console.error('Error sending email:', error);
       setSubmitStatus('error');
+      
+      // Track form submission error
+      analytics.trackEvent('contact_form_error', 'contact', 'network_error');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleSocialClick = (platform, url) => {
+    // Track social media clicks
+    analytics.socialClick(platform.toLowerCase());
+    
     if (url.startsWith('mailto:')) {
       window.location.href = url;
     } else {
@@ -159,9 +187,9 @@ export default function Contact() {
               })}
             </div>
 
-            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="bg-blue-100 dark:bg-blue-800 p-4 rounded-lg border border-blue-300 dark:border-blue-600">
               <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Quick Response Guaranteed</h4>
-              <p className="text-blue-700 dark:text-blue-300 text-sm">
+              <p className="text-blue-800 dark:text-blue-200 text-sm">
                 I typically respond to all inquiries within 24 hours. Let&apos;s discuss your project!
               </p>
             </div>
@@ -171,7 +199,7 @@ export default function Contact() {
             <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Send a Message</h3>
             
             {submitStatus === 'success' && (
-              <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center space-x-3">
+              <div className="mb-6 p-4 bg-green-100 dark:bg-green-800 border border-green-300 dark:border-green-600 rounded-lg flex items-center space-x-3">
                 <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                 <div>
                   <p className="text-green-800 dark:text-green-200 font-semibold">Message sent successfully!</p>
@@ -181,7 +209,7 @@ export default function Contact() {
             )}
             
             {submitStatus === 'error' && (
-              <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center space-x-3">
+              <div className="mb-6 p-4 bg-red-100 dark:bg-red-800 border border-red-300 dark:border-red-600 rounded-lg flex items-center space-x-3">
                 <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
                 <div>
                   <p className="text-red-800 dark:text-red-200 font-semibold">Failed to send message</p>

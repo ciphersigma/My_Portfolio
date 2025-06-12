@@ -1,6 +1,7 @@
-// components/Hero.js - With Dark Mode
+// components/Hero.js - With Analytics Tracking
 'use client';
 import React, { useState, useEffect, useMemo } from 'react';
+import { analytics } from '../lib/analytics';
 
 export default function Hero() {
   const [typedText, setTypedText] = useState('');
@@ -35,6 +36,16 @@ export default function Hero() {
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    
+    // Track hero button clicks
+    if (id === 'contact') {
+      analytics.trackEvent('hero_cta_click', 'engagement', 'lets_connect_button');
+    } else if (id === 'projects') {
+      analytics.trackEvent('hero_cta_click', 'engagement', 'view_projects_button');
+    }
+    
+    // Also track as navigation
+    analytics.navClick(id);
   };
 
   return (
